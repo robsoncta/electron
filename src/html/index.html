@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+		<title>Control ID .::. Niot</title>
+	</head>
+	<body>
+
+		<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+			<a class="navbar-brand my-0 mr-md-auto" href="Javascript:void(0)">
+				NIOT
+			</a>
+			<nav class="my-2 my-md-0 mr-md-3">
+			  <a class="p-2 text-dark" href="Javascript:void(0)" data-toggle="modal" data-target="#staticBackdrop">Settings</a>
+			</nav>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-12">
+
+					<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+						<h1 class="display-4">Status</h1>
+						<span>
+							Secure ID Server: 
+							<span id="SS">
+								<div class="spinner-border spinner-border-sm" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+							</span>
+						</span>
+						<br>
+						<span>
+							Niot Server: 
+							<span id="CS">
+								<div class="spinner-border spinner-border-sm" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+							</span>
+						</span>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="row justify-content-center mb-5">
+				<div class="col-8 form-api-login d-none">
+					<form class="toApiLogin">
+						<h3>Acesso admin da API</h3>
+						<div class="form-group">
+							<label for="username">Usuário</label>
+							<input type="text" class="form-control" id="username">
+						</div>
+						<div class="form-group">
+							<label for="password">Senha</label>
+							<input type="password" class="form-control" id="password" >
+						</div>
+						<button type="submit" class="btn btn-primary submit">Login</button>
+					</form>
+				</div>
+			</div>
+			<div class="row justify-content-center mb-5">
+				<div class="col-8 form-api-unidades d-none">
+					<form class="toCondSelect">
+						<h3>Unidades</h3>
+						<div class="form-group">
+							<label for="username">Selecione uma unidade</label>
+							<select class="form-control" required id="unidadeSelect">
+								<option value="">Escolha uma</option>
+							</select>						
+						</div>
+						<button type="submit" class="btn btn-primary submit">Salvar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- Optional JavaScript; choose one of the two! -->
+		<script>
+			// You can also require other files to run in this process
+			var jQuery = require('jquery');
+			var $ = require('jquery');
+			//var WebSocket = require('WebSocket');
+			// var WebSocket = require('ws');
+		</script>
+
+		<script>
+			let ws = null
+
+			$(function () {
+				// Only connect when username is available
+				if (window.username) {
+					console.log(window.username);
+					startChat();
+				}
+			})
+
+			function startChat () {
+				// ws = adonis.Ws().connect()
+				var ws = new WebSocket("ws://api.niot.allycode.net/ws");
+
+				console.log(ws);
+
+				ws.on('open', () => {
+					$('.connection-status').addClass('connected')
+					console.log('connected');
+					//subscribeToChannel()
+				})
+
+				ws.on('error', () => {
+					$('.connection-status').removeClass('connected')
+					console.log('error');
+				})
+			}
+		</script>
+
+		<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+		<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+		<!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+		-->
+
+		<!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Settings</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form class="toSubmit">
+							<!-- <div class="form-group">
+								<label for="exampleFormControlInput0">Endereço do Cloud</label>
+								<input type="text" class="form-control" id="exampleFormControlInput0" placeholder="http://127.0.0.1">
+							</div> -->
+							<!-- <div class="form-group">
+								<label for="exampleFormControlInput4">Condominio</label>
+								<select class="form-control" id="exampleFormControlInput4" required>
+									<option value="">Selecione</option>
+								</select>
+							</div> -->
+						
+							<hr>
+						
+							<h3>Acesso admin do Servidor</h3>
+							<div class="form-group">
+								<label for="exampleFormControlInput1">Endereço</label>
+								<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="http://127.0.0.1">
+							</div>
+							<div class="form-group">
+							  <label for="exampleFormControlInput2">Usuário</label>
+							  <input type="text" class="form-control" id="exampleFormControlInput2">
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlInput3">Senha</label>
+								<input type="password" class="form-control" id="exampleFormControlInput3" >
+							  </div>
+							<button type="submit" class="btn btn-primary submit">Salvar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="../js/create_access.js"></script>
+
+	</body>
+</html>
